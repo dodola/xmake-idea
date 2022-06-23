@@ -12,7 +12,8 @@ import java.io.OutputStreamWriter
 class ConsoleProcessHandler(
     private val consoleView: ConsoleView,
     commandLine: GeneralCommandLine,
-    showExitCode: Boolean = false
+    showExitCode: Boolean = false,
+    private val showContent: Boolean = true
 ) : KillableColoredProcessHandler(commandLine) {
 
     // the output content
@@ -33,7 +34,9 @@ class ConsoleProcessHandler(
 
     // append info to the console view
     private fun append(s: String, k: Key<*>) {
-        this.consoleView.print(s, ConsoleViewContentType.getConsoleViewType(k))
+        if (showContent) {
+            this.consoleView.print(s, ConsoleViewContentType.getConsoleViewType(k))
+        }
         outputContent += s
     }
 

@@ -43,7 +43,7 @@ class XMakeToolWindowProblemPanel(project: Project) : SimpleToolWindowPanel(fals
         }
 
     // the toolbar
-    val toolbar: ActionToolbar = run {
+    private val toolbar: ActionToolbar = run {
         val actionManager = ActionManager.getInstance()
         actionManager.createActionToolbar("XMake Toolbar", actionManager.getAction("XMake.Menu") as DefaultActionGroup, false)
     }
@@ -85,7 +85,7 @@ class XMakeToolWindowProblemPanel(project: Project) : SimpleToolWindowPanel(fals
     }
 
     // the content
-    val content = panel {
+    private val content = panel {
         row {
             problemPane(CCFlags.push, CCFlags.grow)
         }
@@ -103,7 +103,7 @@ class XMakeToolWindowProblemPanel(project: Project) : SimpleToolWindowPanel(fals
         // init double click listener
         problemList.addMouseListener(object: MouseAdapter() {
             override fun mouseClicked(e: MouseEvent) {
-                if (e.getClickCount() == 1 || e.getClickCount() == 2) {
+                if (e.clickCount == 1 || e.clickCount == 2) {
 
                     // get the clicked problem
                     val index   = problemList.locationToIndex(e.getPoint())
@@ -113,9 +113,9 @@ class XMakeToolWindowProblemPanel(project: Project) : SimpleToolWindowPanel(fals
                         val problem     = problems[index]
                         var filename    = problem.file
                         if (File(filename).exists()) {
-                            filename = File(filename).getAbsolutePath()
+                            filename = File(filename).absolutePath
                         } else {
-                            filename = File(project.xmakeConfiguration.data.workingDirectory, filename).getAbsolutePath()
+                            filename = File(project.xmakeConfiguration.data.workingDirectory, filename).absolutePath
                         }
 
                         // open this file
@@ -130,7 +130,7 @@ class XMakeToolWindowProblemPanel(project: Project) : SimpleToolWindowPanel(fals
                             val editor = FileEditorManager.getInstance(project).selectedTextEditor
                             if (editor !== null) {
 
-                                if (e.getClickCount() == 2 && editor.markupModel.allHighlighters.size > 0) {
+                                if (e.clickCount == 2 && editor.markupModel.allHighlighters.isNotEmpty()) {
                                     editor.markupModel.removeAllHighlighters()
                                     return
                                 }

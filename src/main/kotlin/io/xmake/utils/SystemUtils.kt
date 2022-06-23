@@ -201,11 +201,12 @@ object SystemUtils {
         commandLine: GeneralCommandLine,
         showConsole: Boolean = true,
         showProblem: Boolean = false,
-        showExitCode: Boolean = false
+        showExitCode: Boolean = false,
+        showContent: Boolean = true,
     ): ProcessHandler {
 
         // create handler
-        val handler = ConsoleProcessHandler(project.xmakeConsoleView, commandLine, showExitCode)
+        val handler = ConsoleProcessHandler(project.xmakeConsoleView, commandLine, showExitCode, showContent)
 
         // show console?
         if (showConsole) {
